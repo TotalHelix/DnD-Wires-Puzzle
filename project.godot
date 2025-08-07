@@ -11,5 +11,10 @@ config_version=5
 [application]
 
 config/name="D&D Circuit Puzzle"
+run/main_scene="uid://dgg5fh5ubm342"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
