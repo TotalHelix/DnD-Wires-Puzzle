@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgg5fh5ubm342"]
+[gd_scene load_steps=6 format=3 uid="uid://dgg5fh5ubm342"]
 
 [ext_resource type="Texture2D" uid="uid://blvebnf65gn7n" path="res://sprites/Flow-Puzzle-Sprites.png" id="1_fa2lt"]
+[ext_resource type="Script" uid="uid://dti1dos4bejkx" path="res://stages/flow_puzzle_brain.gd" id="1_qghdb"]
 [ext_resource type="Script" uid="uid://d1xy4ft8kwycv" path="res://scripts/flow puzzle bg.gd" id="2_qghdb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fa2lt"]
@@ -24,10 +25,13 @@ texture_region_size = Vector2i(32, 32)
 [sub_resource type="TileSet" id="TileSet_ar3c0"]
 tile_size = Vector2i(32, 32)
 uv_clipping = true
-sources/6 = SubResource("TileSetAtlasSource_fa2lt")
+sources/5 = SubResource("TileSetAtlasSource_fa2lt")
 
 [node name="Flow Puzzle" type="Node2D"]
+script = ExtResource("1_qghdb")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="Background" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_ar3c0")
 script = ExtResource("2_qghdb")
+
+[node name="Pipes" type="TileMapLayer" parent="."]

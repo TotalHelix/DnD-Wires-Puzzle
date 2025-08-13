@@ -5,12 +5,16 @@ extends TileMapLayer
 var tile_source_id: int = 5
 
 # size of the box to draw. The total w/h is including borders
-@export var puzzle_width:   int = 10
-var total_width: 			int = puzzle_width + 2
-var total_width_minus_one:	int = total_width - 1
-@export var puzzle_height:  int = 17
-var total_height: 			int = puzzle_height + 2
-var total_height_minus_one:	int = total_height - 1
+var puzzle_width: int
+var total_width: int
+var puzzle_height: int
+var total_height: int
+
+# border position calculations
+var top: int
+var bottom: int
+var left: int
+var right: int
 
 # sprits of the different tiles are in the order they appear, so in the sprite sheet it's
 #	UL	U	UR
@@ -18,19 +22,38 @@ var total_height_minus_one:	int = total_height - 1
 #	BL	B	BR
 
 func _ready() -> void:
+	# get the variables from the parent controller
+	
+	# size of the box to draw. The total w/h is including borders
+	puzzle_width = self.get_parent().puzzle_width
+	total_width = puzzle_width + 2
+	puzzle_height = self.get_parent().puzzle_height
+	total_height = puzzle_height + 2
+
+	# border position calculations
+	top 	= 0
+	bottom 	= total_height - 1
+	left 	= 0
+	right 	= total_width - 1
 	
 	# for every tile on the grid (+ borders)
-	for x in range(total_width):
-		for y in range(total_height):
-			var sprite_to_draw: Vector2i
+	for x: int in range(total_width):
+		for y: int in range(total_height):
+			# default texture is the main grid
+			var atlas_coords: Vector2i = Vector2i(1, 1)
 			
-			# left
-			match Vector2i(x, y):
-				# top row
-				[0, 0]: sprite_to_draw = Vector2i(0, 0)
-				[0, _]: sprite_to_draw = Vector2i(0, 1)
-				[_, 0]: sprite_to_draw = Vector2i(1, 0)
-				[total_width_minus_one, 0]: sprite_to_draw = Vector2i(2, 0)
-				[0, total_height_minus_one]: sprite_to_draw = Vector2i(0, 2)
-				[total_width_minus_one, total_height_minus_one]: sprite_to_draw = Vector2i(2, 2)
+			match [x, y]:
+				# check the corners first
+				[left, top]: 	 atlas_coords = Vector2i(0, 0)
+				[right, top]:	 atlas_coords = Vector2i(2, 0)
+				[left, bottom]:	 atlas_coords = Vector2i(0, 2)
+				[right, bottom]: atlas_coords = Vector2i(2, 2)
 				
+				# then check each side
+				[_, top]:		 atlas_coords = Vector2i(1, 0)
+				[_, bottom]:	 atlas_coords = Vector2i(1, 2)
+				[left, _]:		 atlas_coords = Vector2i(0, 1)
+				[right, _]:		 atlas_coords = Vector2i(2, 1)
+			
+			print("fill cell ", [x, y], " with sprite ", atlas_coords)
+			self.set_cell(Vector2(x, y), tile_source_id, atlas_coords)
