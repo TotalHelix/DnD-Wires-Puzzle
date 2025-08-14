@@ -2,7 +2,7 @@
 extends TileMapLayer
 
 ## the id of the time source that is used to draw the map
-var tile_source_id: int = 5
+var tile_source_id: int
 
 # size of the box to draw. The total w/h is including borders
 var puzzle_width: int
@@ -21,8 +21,13 @@ var right: int
 #	L	C	R
 #	BL	B	BR
 
-func _ready() -> void:
+func update_bg() -> void:
+	# should only be called once, so optimization isn't a huge concern
+	
 	# get the variables from the parent controller
+	
+	# tileset source id
+	self.tile_source_id = self.get_parent().tile_source_id
 	
 	# size of the box to draw. The total w/h is including borders
 	puzzle_width = self.get_parent().puzzle_width
@@ -35,6 +40,9 @@ func _ready() -> void:
 	bottom 	= total_height - 1
 	left 	= 0
 	right 	= total_width - 1
+	
+	# first let's clear out the old
+	self.clear()
 	
 	# for every tile on the grid (+ borders)
 	for x: int in range(total_width):
@@ -57,3 +65,7 @@ func _ready() -> void:
 			
 			print("fill cell ", [x, y], " with sprite ", atlas_coords)
 			self.set_cell(Vector2(x, y), tile_source_id, atlas_coords)
+
+func _ready() -> void:
+	update_bg()
+	

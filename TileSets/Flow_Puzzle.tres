@@ -1,0 +1,26 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b8enfwqv810n6"]
+
+[ext_resource type="Texture2D" uid="uid://blvebnf65gn7n" path="res://sprites/Flow-Puzzle-Sprites.png" id="1_s60bq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fa2lt"]
+texture = ExtResource("1_s60bq")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+uv_clipping = true
+sources/5 = SubResource("TileSetAtlasSource_fa2lt")
